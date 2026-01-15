@@ -15,7 +15,6 @@ import { Item } from './item/item.entity';
       username: 'root',
       password: 'rootpass123',
       database: 'IDF_Procurement_API',
-      entities: [Item],
       synchronize: true,
       autoLoadEntities: true
     }),

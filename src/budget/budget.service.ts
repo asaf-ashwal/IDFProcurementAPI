@@ -1,30 +1,43 @@
 import { Injectable } from '@nestjs/common';
+import { reed_file, write_file } from './utils/functions';
 
 @Injectable()
 export class BudgetService {
-  getBuget() {
-    // aweit
-    let budget = getBuget();
-    return budget;
+  async getBuget(): Promise<number> {
+    let budget = await getBuget();
+    return budget.currentBudget;
   }
-  isInTheBuget(cost: number) {
-    // aweit
-    const budget = this.getBuget();
+
+  async isInTheBuget(cost: number): Promise<boolean> {
+    const budget = await this.getBuget();
     return budget < cost ? false : true;
   }
-  reduceBuget(cost: number): boolean {
-    // aweit
-    const inBuget = this.isInTheBuget(cost);
-    if (!inBuget) {
+
+  async reduceBuget(cost: number): Promise<boolean> {
+    const budget = await this.getBuget();
+    const inBuget = await this.isInTheBuget(cost);
+    if (!inBuget || budget < cost) {
       console.log('Not enough money');
       return false;
     }
-    // aweit
-    this.reduceBuget(cost);
+    await this.updateBudget(cost);
     return true;
   }
+
+  async updateBudget(cost: number) {
+    const budget = await this.getBuget();
+    const newB = {
+      currentBudget: budget - cost,
+    };
+
+    await write_file(newB);
+  }
 }
-function getBuget(): number {
-  let budget = 1000;
-  return budget;
+function getBuget() {
+  try {
+    let budget = reed_file();
+    return budget;
+  } catch (error) {
+    console.log(error);
+  }
 }

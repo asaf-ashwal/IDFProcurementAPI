@@ -21,7 +21,7 @@ export class Item {
   @Column({ default: false })
   hasImage: boolean;
 
-  @Column({default:'empty'})
+  @Column({default:'empty',})
   //   @Image()
   img?: String;
 }
