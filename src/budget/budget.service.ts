@@ -16,6 +16,8 @@ export class BudgetService {
   async reduceBuget(cost: number): Promise<boolean> {
     const budget = await this.getBuget();
     const inBuget = await this.isInTheBuget(cost);
+    console.log(inBuget);
+    
     if (!inBuget || budget < cost) {
       console.log('Not enough money');
       return false;

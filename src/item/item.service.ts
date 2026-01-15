@@ -40,7 +40,7 @@ export class ItemService {
     return result;
   }
   async buyItem(id: number, quantity: number) {
-    const item = await this.getById(id);
+    const item = await this.getById(Number(id));
     if (!item) {
       console.log('no item');
       return false;

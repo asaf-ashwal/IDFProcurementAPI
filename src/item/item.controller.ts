@@ -27,7 +27,7 @@ export class ItemController {
       const cost = item.pricePerUnit * item.quantity;
       const isEnoughMoney = this.budgetService.reduceBuget(cost);
       if (!isEnoughMoney) return false;
-      newiItem = await this.itemService.buyItem(newiItem.id, newiItem.quantity);
+      newiItem = await this.itemService.buyItem(item.id, newiItem.quantity);
       result.push({
         id: newiItem.id,
         newQuantity: newiItem.quantity,
